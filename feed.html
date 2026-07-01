@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curated Feed</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <nav class="app-sidebar" aria-label="Main navigation">
+    <a class="sidebar-icon active" href="feed.html" title="Home / Curated Feed">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+    </a>
+    <a class="sidebar-icon" href="forum.html" title="Image Forum">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5L6.5 17M12 7.5L17.5 17"/></svg>
+    </a>
+    <a class="sidebar-icon" href="resources.html" title="Resource Aggregator">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l6-6"/><path d="M14 4l7 7-3 3-7-7z"/><path d="M13 8l-9 9"/><circle cx="6" cy="18" r="1.5"/></svg>
+    </a>
+    <div class="sidebar-spacer"></div>
+    <a class="sidebar-icon" href="about.html" title="About">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="8" r="0.6" fill="currentColor"/></svg>
+    </a>
+  </nav>
+
+  <main class="app-main">
+    <div class="page-head">
+      <svg class="logo-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><ellipse cx="12" cy="12" rx="9" ry="3.2" transform="rotate(-20 12 12)"/><circle cx="12" cy="12" r="5"/></svg>
+      <h1>Curated Feed</h1>
+    </div>
+
+    <div class="toolbar">
+      <span class="toolbar-label">Newest first</span>
+      <div class="toolbar-actions">
+        <button class="icon-btn" data-dropdown-trigger="feed-sort-panel" data-label-prefix="Sort" title="Sort">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h10M3 12h7M3 18h4"/><path d="M17 5v14M17 19l3-3M17 19l-3-3"/></svg>
+        </button>
+        <div class="dropdown-panel" id="feed-sort-panel">
+          <button data-option class="active">Newest first</button>
+          <button data-option>Oldest first</button>
+          <button data-option>Most popular</button>
+        </div>
+        <button class="icon-btn" data-dropdown-trigger="feed-filter-panel" title="Filter">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M7 12h10M10 19h4"/></svg>
+        </button>
+        <div class="dropdown-panel" id="feed-filter-panel">
+          <button data-option class="active">All topics</button>
+          <button data-option>Deep sky</button>
+          <button data-option>Planetary</button>
+          <button data-option>Gear &amp; reviews</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-list">
+      <article class="card">
+        <h3>Article Preview Div</h3>
+        <p class="card-meta">Deep sky · 6 min read</p>
+        <p class="card-body">A short summary of the article would render here pulled from the curated source feed.</p>
+      </article>
+      <article class="card">
+        <h3>Article Preview Div 2</h3>
+        <p class="card-meta">Planetary · 4 min read</p>
+        <p class="card-body">A short summary of the article would render here pulled from the source feed.</p>
+      </article>
+      <article class="card">
+        <h3>Article Preview Div 3</h3>
+        <p class="card-meta">Gear &amp; reviews · 8 min read</p>
+        <p class="card-body">A short summary of the article would render here pulled from the source feed.</p>
+      </article>
+    </div>
+  </main>
+
+  <div class="scroll-hint">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="14" rx="4"/><path d="M12 6v3"/></svg>
+    Scroll
+  </div>
+
+<script src="code.js"></script>
+</body>
+</html>
