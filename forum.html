@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nightlog — Image Forum</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <nav class="app-sidebar" aria-label="Main navigation">
+    <a class="sidebar-icon" href="feed.html" title="Home / Curated Feed">
+      <img src="icons/house.svg" alt="Home">
+    </a>
+    <a class="sidebar-icon active" href="forum.html" title="Image Forum">
+      <img src="icons/gallery-vertical-end.svg" alt="Forum">
+    </a>
+    <a class="sidebar-icon" href="resources.html" title="Resource Aggregator">
+      <img src="icons/telescope.svg" alt="Resources">
+    </a>
+    <div class="sidebar-spacer"></div>
+    <a class="sidebar-icon" href="about.html" title="About">
+      <img src="icons/earth.svg" alt="About">
+    </a>
+  </nav>
+
+  <button class="post-image-btn" data-modal-open="post-image-modal">
+    <span class="circle-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </span>
+    Post your image
+  </button>
+
+  <main class="app-main">
+    <div class="page-head">
+      <h1>Image Forum</h1>
+    </div>
+
+    <div class="toolbar">
+      <span class="toolbar-label">Newest first</span>
+      <div class="toolbar-actions">
+        <button class="icon-btn" title="Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        </button>
+        <button class="icon-btn" data-dropdown-trigger="forum-sort-panel" data-label-prefix="Sort" title="Sort">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h10M3 12h7M3 18h4"/><path d="M17 5v14M17 19l3-3M17 19l-3-3"/></svg>
+        </button>
+        <div class="dropdown-panel" id="forum-sort-panel">
+          <button data-option class="active">Newest first</button>
+          <button data-option>Most upvoted</button>
+          <button data-option>Most commented</button>
+        </div>
+        <button class="icon-btn" data-dropdown-trigger="forum-filter-panel" title="Filter">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M7 12h10M10 19h4"/></svg>
+        </button>
+        <div class="dropdown-panel" id="forum-filter-panel">
+          <button data-option class="active">All objects</button>
+          <button data-option>Nebulae</button>
+          <button data-option>Galaxies</button>
+          <button data-option>Planets &amp; Moon</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-list" id="forum-card-list">
+      <article class="card post-card">
+        <div class="post-meta-row">
+          <span>Posted by: orion_hunter</span>
+          <span>Date: Jun 24, 2026</span>
+        </div>
+        <h3>Andromeda, two-night stack</h3>
+        <div class="post-body">
+          <div class="image-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+          </div>
+          <div class="info-div">
+            <div class="info-title">Info Div</div>
+            <dl>
+              <dt>Object</dt><dd>M31 — Andromeda Galaxy</dd>
+              <dt>Telescope</dt><dd>8" Newtonian</dd>
+              <dt>Mirror</dt><dd>f/4.9</dd>
+              <dt>Eyepiece</dt><dd>n/a (imaging)</dd>
+              <dt>Image Processing</dt><dd>Stacked, PixInsight</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="post-actions">
+          <button class="action-btn upvote-btn" type="button">▲ <span class="upvote-count">14</span></button>
+          <button class="action-btn comment-btn" type="button">💬 Comment</button>
+          <button class="action-btn share-btn" type="button">↗ Share</button>
+        </div>
+        <div class="comment-box">
+          <input type="text" placeholder="Add a comment…">
+          <button class="action-btn comment-submit" type="button">Post</button>
+        </div>
+      </article>
+
+      <article class="card post-card">
+        <div class="post-meta-row">
+          <span>Posted by: lunar_lee</span>
+          <span>Date: Jun 21, 2026</span>
+        </div>
+        <h3>First quarter Moon, terminator detail</h3>
+        <div class="post-body">
+          <div class="image-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+          </div>
+          <div class="info-div">
+            <div class="info-title">Info Div</div>
+            <dl>
+              <dt>Object</dt><dd>Moon — Terminator</dd>
+              <dt>Telescope</dt><dd>6" Refractor</dd>
+              <dt>Mirror</dt><dd>n/a</dd>
+              <dt>Eyepiece</dt><dd>10mm Plössl</dd>
+              <dt>Image Processing</dt><dd>Lucky imaging, AutoStakkert</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="post-actions">
+          <button class="action-btn upvote-btn" type="button">▲ <span class="upvote-count">7</span></button>
+          <button class="action-btn comment-btn" type="button">💬 Comment</button>
+          <button class="action-btn share-btn" type="button">↗ Share</button>
+        </div>
+        <div class="comment-box">
+          <input type="text" placeholder="Add a comment…">
+          <button class="action-btn comment-submit" type="button">Post</button>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <div class="scroll-hint">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="14" rx="4"/><path d="M12 6v3"/></svg>
+    Scroll
+  </div>
+
+  <div class="modal-overlay" id="post-image-modal">
+    <div class="modal-box">
+      <button class="modal-close" data-modal-close type="button">Close ✕</button>
+      <h2>Post your image</h2>
+      <form id="post-image-form" data-modal-id="post-image-modal">
+        <div class="field">
+          <label for="post-title-input">Title</label>
+          <input type="text" id="post-title-input" placeholder="e.g. Orion Nebula, single night">
+        </div>
+        <div class="field">
+          <label for="post-object-input">Object</label>
+          <input type="text" id="post-object-input" placeholder="e.g. M42 — Orion Nebula">
+        </div>
+        <div class="field">
+          <label for="image-upload-input">Image</label>
+          <input type="file" id="image-upload-input" accept="image/*">
+        </div>
+        <div class="image-box" id="image-upload-preview" style="margin-top:4px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-top:14px;">Submit post</button>
+      </form>
+    </div>
+  </div>
+
+<script src="code.js"></script>
+</body>
+</html>
