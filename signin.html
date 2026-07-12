@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nightlog — Sign In</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-page">
+
+  <header class="site-banner">
+    <div class="site-name">Nightlog</div>
+  </header>
+
+  <main class="auth-main">
+    <section class="auth-panel">
+      <h1>Sign In</h1>
+
+      <form id="auth-form" novalidate>
+        <div class="field">
+          <label for="username">Email or username</label>
+          <input type="text" id="username" required>
+          <div class="field-error" id="username-error"></div>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" required>
+          <div class="field-error" id="password-error"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
+      <p class="auth-switch">Don't have an account? <a href="signup.html">Sign up</a></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a href="about.html">Contact / About</a>
+  </footer>
+
+<script src="script.js"></script>
+</body>
+</html>

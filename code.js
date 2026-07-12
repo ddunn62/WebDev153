@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initForumActions();
   initModals();
   initAuthForms();
+  initPostFormValidation();
   initGuestLink();
 });
 
@@ -181,6 +182,23 @@ function initModals() {
   const postForm = document.getElementById("post-image-form");
   if (postForm) {
     postForm.addEventListener("submit", (e) => {
+      if (!postForm.checkValidity()) {
+        postForm.querySelectorAll("input[required]").forEach((input) => {
+          const errorEl = document.getElementById(`${input.id}-error`);
+          if (!errorEl) return;
+          if (!input.validity.valid) {
+            if (input.validity.valueMissing) {
+              errorEl.textContent = "This field is required.";
+            } else {
+              errorEl.textContent = "Please enter a valid value.";
+            }
+          } else {
+            errorEl.textContent = "";
+          }
+        });
+        e.preventDefault();
+        return;
+      }
       e.preventDefault();
       const list = document.getElementById("forum-card-list");
       const title = document.getElementById("post-title-input").value || "Untitled capture";
@@ -188,7 +206,7 @@ function initModals() {
       const previewImg = previewBox?.querySelector("img");
       const imgHTML = previewImg
         ? previewImg.outerHTML
-        : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>`;
+        : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21/></svg>`;
 
       const card = document.createElement("article");
       card.className = "card post-card";
@@ -271,6 +289,27 @@ function initAuthForms() {
   });
 }
 
+function attachSimpleFieldValidation(form) {
+  form.querySelectorAll("input[required]").forEach((input) => {
+    const errorEl = document.getElementById(`${input.id}-error`);
+    const showError = () => {
+      if (!errorEl) return;
+      if (!input.validity.valid) {
+        if (input.validity.valueMissing) {
+          errorEl.textContent = "This field is required.";
+        } else {
+          errorEl.textContent = "Please enter a valid value.";
+        }
+      } else {
+        errorEl.textContent = "";
+      }
+    };
+
+    input.addEventListener("input", showError);
+    input.addEventListener("blur", showError);
+  });
+}
+
 /* -----------------------------------------------------------
    "Continue as Guest"
    ----------------------------------------------------------- */
@@ -282,4 +321,31 @@ function initGuestLink() {
       window.location.href = "feed.html";
     });
   }
+}
+
+function initPostFormValidation() {
+  const postForm = document.getElementById("post-image-form");
+  if (!postForm) return;
+
+  attachSimpleFieldValidation(postForm);
+
+  postForm.addEventListener("submit", (e) => {
+    let valid = true;
+    postForm.querySelectorAll("input[required]").forEach((input) => {
+      const errorEl = document.getElementById(`${input.id}-error`);
+      if (!input.validity.valid) {
+        valid = false;
+        if (input.validity.valueMissing) {
+          errorEl.textContent = "This field is required.";
+        } else {
+          errorEl.textContent = "Please enter a valid value.";
+        }
+      } else if (errorEl) {
+        errorEl.textContent = "";
+      }
+    });
+    if (!valid) {
+      e.preventDefault();
+    }
+  });
 }

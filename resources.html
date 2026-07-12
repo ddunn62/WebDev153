@@ -26,6 +26,7 @@
 
   <main class="app-main">
     <div class="app-header">
+      <a class="back-link" href="feed.html" aria-label="Back to Feed">← Back to Feed</a>
       <div class="app-header-actions">
         <a class="btn btn-secondary btn-small" href="signin.html">Sign In</a>
         <a class="btn btn-primary btn-small" href="signup.html">Sign Up</a>
@@ -58,22 +59,32 @@
     </div>
 
     <div class="card-list" id="resource-card-list">
-      <article class="card" data-category="telescopes">
-        <h3>Choosing your first telescope</h3>
-        <p class="card-meta">Category: telescopes</p>
-      </article>
-      <article class="card" data-category="eyepieces">
-        <h3>Eyepiece focal length cheat sheet</h3>
-        <p class="card-meta">Category: eyepieces</p>
-      </article>
-      <article class="card" data-category="cameras">
-        <h3>Budget astrophotography cameras, ranked</h3>
-        <p class="card-meta">Category: cameras</p>
-      </article>
-      <article class="card" data-category="telescopes">
-        <h3>Collimating a Newtonian, step by step</h3>
-        <p class="card-meta">Category: telescopes</p>
-      </article>
+      <table class="resource-table" aria-label="Resource list">
+        <thead>
+          <tr>
+            <th>Resource</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="card" data-category="telescopes">
+            <td><h2>Choosing your first telescope</h2></td>
+            <td>Telescopes</td>
+          </tr>
+          <tr class="card" data-category="eyepieces">
+            <td><h2>Eyepiece focal length cheat sheet</h2></td>
+            <td>Eyepieces</td>
+          </tr>
+          <tr class="card" data-category="cameras">
+            <td><h2>Budget astrophotography cameras, ranked</h2></td>
+            <td>Cameras</td>
+          </tr>
+          <tr class="card" data-category="telescopes">
+            <td><h2>Collimating a Newtonian, step by step</h2></td>
+            <td>Telescopes</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </main>
 
