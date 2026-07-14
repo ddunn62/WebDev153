@@ -20,7 +20,7 @@
     </a>
     <div class="sidebar-spacer"></div>
     <a class="sidebar-icon" href="about.html" title="About">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="8" r="0.6" fill="currentColor"/></svg>
+      <img src="icons/earth.svg" alt="About">
     </a>
   </nav>
 
@@ -28,8 +28,9 @@
     <div class="app-header">
       <a class="back-link" href="index.html" aria-label="Back to Welcome">← Back to Welcome</a>
       <div class="app-header-actions">
-        <a class="btn btn-secondary btn-small" href="signin.html">Sign In</a>
-        <a class="btn btn-primary btn-small" href="signup.html">Sign Up</a>
+        <a class="btn btn-secondary btn-small auth-btn" href="signin.html">Sign In</a>
+        <a class="btn btn-cyan btn-small auth-btn" href="signup.html">Sign Up</a>
+        <button class="btn btn-primary btn-small" id="logout-btn" style="display: none;">Logout</button>
       </div>
     </div>
     <div class="site-header page-head">
@@ -40,16 +41,8 @@
     </div>
 
     <div class="toolbar">
-      <span class="toolbar-label">Newest first</span>
+      <span class="toolbar-label">All topics</span>
       <div class="toolbar-actions">
-        <button class="icon-btn" data-dropdown-trigger="feed-sort-panel" data-label-prefix="Sort" title="Sort">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h10M3 12h7M3 18h4"/><path d="M17 5v14M17 19l3-3M17 19l-3-3"/></svg>
-        </button>
-        <div class="dropdown-panel" id="feed-sort-panel">
-          <button data-option class="active">Newest first</button>
-          <button data-option>Oldest first</button>
-          <button data-option>Most popular</button>
-        </div>
         <button class="icon-btn" data-dropdown-trigger="feed-filter-panel" title="Filter">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M7 12h10M10 19h4"/></svg>
         </button>
@@ -57,35 +50,21 @@
           <button data-option class="active">All topics</button>
           <button data-option>Deep sky</button>
           <button data-option>Planetary</button>
-          <button data-option>Gear &amp; reviews</button>
+          <button data-option>General Info</button>
         </div>
       </div>
     </div>
 
-    <div class="card-list">
-      <article class="card">
-        <h2>Article Preview Div</h2>
-        <p class="card-meta">Deep sky · 6 min read</p>
-        <p class="card-body">A short summary of the article would render here pulled from the curated source feed.</p>
-      </article>
-      <article class="card">
-        <h2>Article Preview Div 2</h2>
-        <p class="card-meta">Planetary · 4 min read</p>
-        <p class="card-body">A short summary of the article would render here pulled from the source feed.</p>
-      </article>
-      <article class="card">
-        <h2>Article Preview Div 3</h2>
-        <p class="card-meta">Gear &amp; reviews · 8 min read</p>
-        <p class="card-body">A short summary of the article would render here pulled from the source feed.</p>
-      </article>
+    <div class="card-list" id="feed-container">
+      <!-- Articles dynamically populated here -->
     </div>
   </main>
 
-  <div class="scroll-hint">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="14" rx="4"/><path d="M12 6v3"/></svg>
-    Scroll
-  </div>
-
-<script src="code.js"></script>
+  <footer class="site-footer">
+    <a href="about.html">Contact / About</a> | 
+    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> | 
+    <a href="https://firebase.google.com/docs/rules" target="_blank" rel="noopener">Account Security</a>
+  </footer>
+<script type="module" src="code.js"></script>
 </body>
 </html>

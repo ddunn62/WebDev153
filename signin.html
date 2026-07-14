@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nightlog — Sign In</title>
+<title>nightlens — Sign In</title>
 <link rel="stylesheet" href="styles.css">
 </head>
-<body class="auth-page">
+<body class="auth-page signin-page">
 
   <header class="site-banner">
-    <div class="site-name">Nightlog</div>
+    <div class="site-name">nightlens</div>
   </header>
 
   <main class="auth-main">
@@ -18,9 +18,9 @@
 
       <form id="auth-form" novalidate>
         <div class="field">
-          <label for="username">Email or username</label>
-          <input type="text" id="username" required>
-          <div class="field-error" id="username-error"></div>
+          <label for="email">Email</label>
+          <input type="email" id="email" required>
+          <div class="field-error" id="email-error"></div>
         </div>
         <div class="field">
           <label for="password">Password</label>
@@ -35,9 +35,11 @@
   </main>
 
   <footer class="site-footer">
-    <a href="about.html">Contact / About</a>
+    <a href="about.html">Contact / About</a> | 
+    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> | 
+    <a href="https://firebase.google.com/docs/rules" target="_blank" rel="noopener">Account Security</a>
   </footer>
 
-<script src="script.js"></script>
+<script type="module" src="code.js"></script>
 </body>
 </html>

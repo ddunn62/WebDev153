@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nightlog — Image Forum</title>
+<title>nightlens — Image Forum</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -35,12 +35,16 @@
     <div class="app-header">
       <a class="back-link" href="feed.html" aria-label="Back to Feed">← Back to Feed</a>
       <div class="app-header-actions">
-        <a class="btn btn-secondary btn-small" href="signin.html">Sign In</a>
-        <a class="btn btn-primary btn-small" href="signup.html">Sign Up</a>
+        <a class="btn btn-secondary btn-small auth-btn" href="signin.html">Sign In</a>
+        <a class="btn btn-cyan btn-small auth-btn" href="signup.html">Sign Up</a>
+        <button class="btn btn-primary btn-small" id="logout-btn" style="display: none;">Logout</button>
       </div>
     </div>
-    <div class="page-head">
-      <h1>Image Forum</h1>
+    <div class="site-header page-head">
+      <a class="site-logo" href="forum.html" aria-label="Image Forum homepage">
+        <img src="icons/gallery-vertical-end.svg" alt="Forum logo">
+        <span class="site-logo-text">Forum</span>
+      </a>
     </div>
 
     <div class="toolbar">
@@ -78,7 +82,7 @@
         <h3>Andromeda, two-night stack</h3>
         <div class="post-body">
           <div class="image-box">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+            <img src="Images/andromeda.jpg" alt="Andromeda Galaxy - two night stack">
           </div>
           <div class="info-div">
             <div class="info-title">Info Div</div>
@@ -110,7 +114,7 @@
         <h3>First quarter Moon, terminator detail</h3>
         <div class="post-body">
           <div class="image-box">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+            <img src="Images/moon_t.jpg" alt="First quarter Moon - terminator detail">
           </div>
           <div class="info-div">
             <div class="info-title">Info Div</div>
@@ -135,11 +139,6 @@
       </article>
     </div>
   </main>
-
-  <div class="scroll-hint">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="14" rx="4"/><path d="M12 6v3"/></svg>
-    Scroll
-  </div>
 
   <div class="modal-overlay" id="post-image-modal">
     <div class="modal-box">
@@ -168,7 +167,11 @@
       </form>
     </div>
   </div>
-
-<script src="code.js"></script>
+  <footer class="site-footer">
+    <a href="about.html">Contact / About</a> | 
+    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> | 
+    <a href="https://firebase.google.com/docs/rules" target="_blank" rel="noopener">Account Security</a>
+  </footer>
+<script type="module" src="code.js"></script>
 </body>
 </html>
