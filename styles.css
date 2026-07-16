@@ -476,18 +476,20 @@ body.signin-page .auth-switch a:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-  padding: 0;
+  justify-content: flex-start;
+  gap: 18px;
+  padding: 16px 0;
   background: #fff;
   z-index: 20;
 }
 
 .sidebar-icon {
-  width: 52px;
-  height: 52px;
+  width: 56px;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0;
   border-radius: 50%;
   color: var(--text);
   transition: all 0.3s ease;
@@ -495,8 +497,8 @@ body.signin-page .auth-switch a:hover {
 
 .sidebar-icon img,
 .sidebar-icon svg {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   display: block;
 }
 
@@ -1054,11 +1056,12 @@ body.signin-page .auth-switch a:hover {
     padding: 12px 0;
     flex-direction: row;
     justify-content: center;
+    gap: 10px;
   }
 
   .sidebar-icon {
     margin-bottom: 0;
-    margin-right: 16px;
+    margin-right: 0;
   }
 
   .sidebar-spacer {
