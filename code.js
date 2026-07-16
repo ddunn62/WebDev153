@@ -42,16 +42,31 @@ async function supabaseQuery(endpoint, options = {}) {
 
 // Get all forum posts from Supabase
 async function loadForumPosts() {
-  const posts = await supabaseQuery("/posts?order=id.desc");
+  const posts = await supabaseQuery("/posts?order=created_at.desc");
   if (!posts || !Array.isArray(posts)) return [];
   return posts;
 }
 
 // Save a new forum post to Supabase
-async function saveForumPost(title, object, imageURL, userId) {
+async function saveForumPost(postInput) {
+  const {
+    title,
+    object,
+    telescope,
+    mirror,
+    eyepiece,
+    imageProcessing,
+    imageURL,
+    userId
+  } = postInput;
+
   const post = {
     title,
     object,
+    telescope,
+    mirror,
+    eyepiece,
+    image_processing: imageProcessing,
     image_url: imageURL,
     user_id: userId,
     created_at: new Date().toISOString(),
@@ -67,7 +82,8 @@ async function saveForumPost(title, object, imageURL, userId) {
     body: JSON.stringify(post)
   });
   
-  return Array.isArray(response) ? (response[0] || null) : response;
+  const savedPost = Array.isArray(response) ? (response[0] || null) : response;
+  return savedPost;
 }
 
 // Update likes for a post
@@ -285,6 +301,7 @@ async function loadAndRenderForumPosts() {
   const list = document.getElementById("forum-card-list");
   
   if (!posts || posts.length === 0) return; // No posts to render
+  list.innerHTML = "";
   
   posts.forEach((post) => {
     const card = document.createElement("article");
@@ -299,7 +316,7 @@ async function loadAndRenderForumPosts() {
     card.innerHTML = `
       <div class="post-meta-row">
         <span>Posted by: ${post.user_id || "Anonymous"}</span>
-        <span>Date: ${new Date(post.created_at).toLocaleDateString()}</span>
+        <span>Date: ${new Date(post.created_at || Date.now()).toLocaleDateString()}</span>
       </div>
       <h3>${post.title}</h3>
       <div class="post-body">
@@ -308,10 +325,10 @@ async function loadAndRenderForumPosts() {
           <div class="info-title">Info Div</div>
           <dl>
             <dt>Object</dt><dd>${post.object || "—"}</dd>
-            <dt>Telescope</dt><dd>—</dd>
-            <dt>Mirror</dt><dd>—</dd>
-            <dt>Eyepiece</dt><dd>—</dd>
-            <dt>Image Processing</dt><dd>—</dd>
+            <dt>Telescope</dt><dd>${post.telescope || "—"}</dd>
+            <dt>Mirror</dt><dd>${post.mirror || "—"}</dd>
+            <dt>Eyepiece</dt><dd>${post.eyepiece || "—"}</dd>
+            <dt>Image Processing</dt><dd>${post.image_processing || "—"}</dd>
           </dl>
         </div>
       </div>
@@ -728,7 +745,16 @@ function initModals() {
       }
       
       // Save post to Supabase
-      const newPost = await saveForumPost(title, objectField, imageData, currentUserId);
+      const newPost = await saveForumPost({
+        title,
+        object: objectField,
+        telescope: telescopeField,
+        mirror: mirrorField,
+        eyepiece: eyepieceField,
+        imageProcessing: processingField,
+        imageURL: imageData,
+        userId: currentUserId
+      });
       
       // Use image HTML for display
       const imgHTML = previewImg
@@ -743,20 +769,20 @@ function initModals() {
       }
       card.innerHTML = `
         <div class="post-meta-row">
-          <span>Posted by: ${currentUserId}</span>
-          <span>Date: ${new Date().toLocaleDateString()}</span>
+          <span>Posted by: ${newPost?.user_id || currentUserId}</span>
+          <span>Date: ${new Date(newPost?.created_at || Date.now()).toLocaleDateString()}</span>
         </div>
-        <h3>${title}</h3>
+        <h3>${newPost?.title || title}</h3>
         <div class="post-body">
-          <div class="image-box">${imgHTML}</div>
+          <div class="image-box">${newPost?.image_url ? `<img src="${newPost.image_url}" alt="${newPost.title || "User upload"}">` : imgHTML}</div>
           <div class="info-div">
             <div class="info-title">Info Div</div>
             <dl>
-              <dt>Object</dt><dd>${objectField}</dd>
-              <dt>Telescope</dt><dd>${telescopeField}</dd>
-              <dt>Mirror</dt><dd>${mirrorField}</dd>
-              <dt>Eyepiece</dt><dd>${eyepieceField}</dd>
-              <dt>Image Processing</dt><dd>${processingField}</dd>
+              <dt>Object</dt><dd>${newPost?.object || objectField}</dd>
+              <dt>Telescope</dt><dd>${newPost?.telescope || telescopeField}</dd>
+              <dt>Mirror</dt><dd>${newPost?.mirror || mirrorField}</dd>
+              <dt>Eyepiece</dt><dd>${newPost?.eyepiece || eyepieceField}</dd>
+              <dt>Image Processing</dt><dd>${newPost?.image_processing || processingField}</dd>
             </dl>
           </div>
         </div>
