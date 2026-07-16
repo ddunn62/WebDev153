@@ -6,8 +6,8 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthState
 /* -----------------------------------------------------------
    Supabase Setup (ADD YOUR CREDENTIALS HERE)
    ----------------------------------------------------------- */
-const SUPABASE_URL = "YOUR_SUPABASE_URL"; // Get from Supabase project settings
-const SUPABASE_KEY = "YOUR_SUPABASE_ANON_KEY"; // Get from Supabase project settings
+const SUPABASE_URL = "https://fdywvhtrwaqrmslsanqe.supabase.co"; // Get from Supabase project settings
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZkeXd2aHRyd2Fxcm1zbHNhbnFlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxNjQ1ODEsImV4cCI6MjA5OTc0MDU4MX0.uaqTZfF8v7yvEMo4oX3CyJ8DQo4GrHpNs6AM33XDNjw"; // Get from Supabase project settings
 
 // Supabase helper functions
 async function supabaseQuery(endpoint, options = {}) {
@@ -80,6 +80,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initFeed();
   initPostImageButtonVisibility();
   initCategoryFilters();
+  initAboutSlideshow();
   
   // Load forum posts from Supabase if on forum page
   const forumCardList = document.getElementById("forum-card-list");
@@ -383,6 +384,67 @@ function initCategoryFilters() {
       });
     });
   });
+}
+
+/* -----------------------------------------------------------
+   About Slideshow - click through sections
+   ----------------------------------------------------------- */
+function initAboutSlideshow() {
+  const slideshow = document.getElementById("about-slideshow");
+  if (!slideshow) return;
+
+  const slides = Array.from(slideshow.querySelectorAll("[data-about-slide]"));
+  const prevBtn = document.getElementById("about-prev");
+  const nextBtn = document.getElementById("about-next");
+  const dots = Array.from(slideshow.querySelectorAll("[data-about-dot]"));
+  const countEl = document.getElementById("about-slide-count");
+
+  if (!slides.length) return;
+
+  let currentIndex = 0;
+
+  const render = () => {
+    slides.forEach((slide, index) => {
+      slide.classList.toggle("active", index === currentIndex);
+      slide.setAttribute("aria-hidden", index === currentIndex ? "false" : "true");
+    });
+
+    dots.forEach((dot, index) => {
+      const isActive = index === currentIndex;
+      dot.classList.toggle("active", isActive);
+      dot.setAttribute("aria-current", isActive ? "true" : "false");
+    });
+
+    if (countEl) countEl.textContent = `${currentIndex + 1} / ${slides.length}`;
+
+    if (prevBtn) prevBtn.disabled = currentIndex === 0;
+    if (nextBtn) nextBtn.disabled = currentIndex === slides.length - 1;
+  };
+
+  if (prevBtn) {
+    prevBtn.addEventListener("click", () => {
+      currentIndex = Math.max(0, currentIndex - 1);
+      render();
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => {
+      currentIndex = Math.min(slides.length - 1, currentIndex + 1);
+      render();
+    });
+  }
+
+  dots.forEach((dot) => {
+    dot.addEventListener("click", () => {
+      const index = Number(dot.dataset.aboutDot);
+      if (Number.isNaN(index)) return;
+      currentIndex = Math.min(slides.length - 1, Math.max(0, index));
+      render();
+    });
+  });
+
+  render();
 }
 
 /* -----------------------------------------------------------

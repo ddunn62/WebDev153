@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>nightlens — About</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <nav class="app-sidebar" aria-label="Main navigation">
+    <a class="sidebar-icon" href="feed.html" title="Home / Curated Feed">
+      <img src="icons/house.svg" alt="Feed page">
+    </a>
+    <a class="sidebar-icon" href="forum.html" title="Image Forum">
+      <img src="icons/gallery-vertical-end.svg" alt="Forum page">
+    </a>
+    <a class="sidebar-icon" href="resources.html" title="Resource Aggregator">
+      <img src="icons/telescope.svg" alt="Resources page">
+    </a>
+    <div class="sidebar-spacer"></div>
+    <a class="sidebar-icon active" href="about.html" title="About">
+      <img src="icons/earth.svg" alt="About page">
+    </a>
+  </nav>
+
+  <main class="app-main">
+    <div class="app-header">
+      <a class="back-link" href="feed.html" aria-label="Back to Feed">← Back to Feed</a>
+      <div class="app-header-actions">
+        <a class="btn btn-secondary btn-small auth-btn" href="signin.html">Sign In</a>
+        <a class="btn btn-cyan btn-small auth-btn" href="signup.html">Sign Up</a>
+        <button class="btn btn-primary btn-small" id="logout-btn" style="display: none;">Logout</button>
+      </div>
+    </div>
+
+    <div class="site-header page-head">
+      <a class="site-logo" href="about.html" aria-label="About page">
+        <img src="icons/earth.svg" alt="nightlens about logo">
+        <span class="site-logo-text">About</span>
+      </a>
+    </div>
+
+    <section class="about-slideshow" id="about-slideshow" aria-label="About nightlens slideshow">
+      <article class="card about-slide active" data-about-slide aria-hidden="false">
+        <div class="about-slide-top">
+          <p class="about-kicker">01 Mission</p>
+          <img class="about-slide-icon" src="icons/rocket.svg" alt="Rocket icon for mission section">
+        </div>
+        <h2>Our mission</h2>
+        <p class="card-body">
+          nightlens is a shared astronomy space built for curious beginners and dedicated sky-watchers.
+          The goal is simple: make astronomy easier to explore through curated reading, community image sharing,
+          and practical gear guidance.
+        </p>
+      </article>
+
+      <article class="card about-slide" data-about-slide aria-hidden="true">
+        <div class="about-slide-top">
+          <p class="about-kicker">02 Features</p>
+          <img class="about-slide-icon" src="icons/satellite.svg" alt="Satellite icon for features section">
+        </div>
+        <h2>What you can do here</h2>
+        <p class="card-body">
+          Browse the Feed for curated astronomy articles, join the Forum to post and discuss astrophotography,
+          and use Resources to find telescope, eyepiece, and camera references.
+        </p>
+        <div class="about-tags">
+          <a href="feed.html">Curated feed</a>
+          <a href="forum.html">Image forum</a>
+          <a href="resources.html">Gear resources</a>
+        </div>
+      </article>
+
+      <article class="card about-slide" data-about-slide aria-hidden="true">
+        <div class="about-slide-top">
+          <p class="about-kicker">03 Community</p>
+          <img class="about-slide-icon" src="icons/eclipse.svg" alt="Eclipse icon for community section">
+        </div>
+        <h2>Community guidelines</h2>
+        <p class="card-body">
+          Be respectful, give helpful feedback, and share information clearly.
+          When posting images, include basic capture details so others can learn from your setup.
+        </p>
+      </article>
+
+      <article class="card about-slide" data-about-slide aria-hidden="true">
+        <div class="about-slide-top">
+          <p class="about-kicker">04 Contact</p>
+          <img class="about-slide-icon" src="icons/earth.svg" alt="Earth icon for contact section">
+        </div>
+        <h2>Contact</h2>
+        <p class="card-body">
+          Questions, feedback, or ideas for features can be sent to
+          <a class="about-email" href="mailto:hello@nightlens.space">hello@nightlens.space</a>.
+        </p>
+      </article>
+
+      <div class="about-slideshow-controls" aria-label="Slideshow controls">
+        <button class="btn btn-secondary btn-small" id="about-prev" type="button">← Previous</button>
+        <div class="about-dots" role="tablist" aria-label="Slide selector">
+          <button class="about-dot active" data-about-dot="0" type="button" aria-label="Go to slide 1" aria-current="true"></button>
+          <button class="about-dot" data-about-dot="1" type="button" aria-label="Go to slide 2" aria-current="false"></button>
+          <button class="about-dot" data-about-dot="2" type="button" aria-label="Go to slide 3" aria-current="false"></button>
+          <button class="about-dot" data-about-dot="3" type="button" aria-label="Go to slide 4" aria-current="false"></button>
+        </div>
+        <span class="about-slide-count" id="about-slide-count" aria-live="polite">1 / 4</span>
+        <button class="btn btn-primary btn-small" id="about-next" type="button">Next →</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a href="about.html">Contact / About</a> |
+    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> |
+    <a href="https://firebase.google.com/docs/rules" target="_blank" rel="noopener">Account Security</a>
+  </footer>
+
+<script type="module" src="code.js"></script>
+</body>
+</html>
