@@ -127,6 +127,61 @@ function renderCommentList(card, comments) {
   });
 }
 
+const POST_TEXT_FIELD_RULES = {
+  "post-object-input": { required: true },
+  "post-telescope-input": { required: false },
+  "post-mirror-input": { required: false },
+  "post-eyepiece-input": { required: false },
+  "post-processing-input": { required: false }
+};
+
+function validatePostTextInput(input, { required }) {
+  if (!input) return true;
+
+  const value = input.value.trim();
+  const errorEl = document.getElementById(`${input.id}-error`);
+  const allowedChars = /^[a-zA-Z0-9\s.,'"\-–—()/:&+!?]*$/;
+
+  if (required && !value) {
+    if (errorEl) errorEl.textContent = "This field is required.";
+    return false;
+  }
+
+  if (!value) {
+    if (errorEl) errorEl.textContent = "";
+    return true;
+  }
+
+  if (value.length > 50) {
+    if (errorEl) errorEl.textContent = "Maximum 50 characters.";
+    return false;
+  }
+
+  if (/<|>/.test(value)) {
+    if (errorEl) errorEl.textContent = "Do not use angle brackets (< or >).";
+    return false;
+  }
+
+  if (/https?:\/\/|www\./i.test(value)) {
+    if (errorEl) errorEl.textContent = "Please remove URLs from this field.";
+    return false;
+  }
+
+  if (!allowedChars.test(value)) {
+    if (errorEl) errorEl.textContent = "Use letters, numbers, spaces, and common punctuation only.";
+    return false;
+  }
+
+  if (errorEl) errorEl.textContent = "";
+  return true;
+}
+
+function validateAllPostTextInputs() {
+  return Object.entries(POST_TEXT_FIELD_RULES)
+    .map(([id, rules]) => validatePostTextInput(document.getElementById(id), rules))
+    .every(Boolean);
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   // Clear guest status when user signs in
   const authForm = document.getElementById("auth-form");
@@ -284,15 +339,15 @@ function initFeed() {
   const container = document.getElementById("feed-container");
   if (!container) return;
 
-  // Sample curated articles - mix of NASA/ESA public domain & original summaries
+  // Sample articles - mix of NASA/ESA (public domain)
   const articles = [
     {
-      title: "James Webb Captures Stellar Nurseries in Unprecedented Detail",
+      title: "Where is JWST right now?",
       category: "Deep sky",
-      readTime: "5 min",
-      summary: "The James Webb Space Telescope has revealed the intricate details of star-forming regions, showing how gravity sculpts cosmic clouds. This breakthrough helps us understand how stars like our Sun were born.",
+      readTime: "Varied",
+      summary: "Track the James Webb Space Telescope's current position and status in its orbit around the second Lagrange point (L2). This resource provides real-time updates and visualizations of JWST's journey through space.",
       source: "NASA - James Webb Space Telescope",
-      link: "https://www.nasa.gov/jwst/"
+      link: "https://science.nasa.gov/mission/webb/what-is-webb-observing/"
     },
     {
       title: "Jupiter's Great Red Spot Continues to Shrink",
@@ -341,7 +396,7 @@ function initFeed() {
     const card = document.createElement("article");
     card.className = "card";
     
-    // Map category to badge class and data attribute
+    // Map category to badge class and data
     const categoryClass = article.category.toLowerCase().replace(/\s+&\s+/g, "-").replace(/\s+/g, "-");
     const categoryData = article.category.toLowerCase();
     
@@ -371,13 +426,13 @@ function initFeed() {
     container.appendChild(card);
   });
   
-  // Set up feed filter
+  // feed filter
   initFeedFilter();
 }
 
-/* -----------------------------------------------------------
-   Feed Filter - Filter articles by category
-   ----------------------------------------------------------- */
+/* --
+   Filter articles by category
+   -- */
 function initFeedFilter() {
   const filterPanel = document.getElementById("feed-filter-panel");
   if (!filterPanel) return;
@@ -449,7 +504,7 @@ function initCategoryFilters() {
 }
 
 /* -----------------------------------------------------------
-   About Slideshow - click through sections
+   About Slideshow 
    ----------------------------------------------------------- */
 function initAboutSlideshow() {
   const slideshow = document.getElementById("about-slideshow");
@@ -629,11 +684,11 @@ function initModals() {
     });
   }
 
-  // Submitting "Post your image" creates a new card to the forum feed
+  // Submit using "Post your image"
   const postForm = document.getElementById("post-image-form");
   if (postForm) {
     postForm.addEventListener("submit", async (e) => {
-      if (!postForm.checkValidity()) {
+      if (!postForm.checkValidity() || !validateAllPostTextInputs()) {
         postForm.querySelectorAll("input[required]").forEach((input) => {
           const errorEl = document.getElementById(`${input.id}-error`);
           if (!errorEl) return;
@@ -652,8 +707,12 @@ function initModals() {
       }
       e.preventDefault();
       const list = document.getElementById("forum-card-list");
-      const title = document.getElementById("post-title-input").value || "Untitled capture";
       const objectField = document.getElementById("post-object-input").value || "—";
+      const title = `${objectField} capture`.trim().slice(0, 50) || "Untitled capture";
+      const telescopeField = document.getElementById("post-telescope-input")?.value || "—";
+      const mirrorField = document.getElementById("post-mirror-input")?.value || "—";
+      const eyepieceField = document.getElementById("post-eyepiece-input")?.value || "—";
+      const processingField = document.getElementById("post-processing-input")?.value || "—";
       const previewImg = previewBox?.querySelector("img");
       
       // Get current user ID from Firebase
@@ -694,10 +753,10 @@ function initModals() {
             <div class="info-title">Info Div</div>
             <dl>
               <dt>Object</dt><dd>${objectField}</dd>
-              <dt>Telescope</dt><dd>—</dd>
-              <dt>Mirror</dt><dd>—</dd>
-              <dt>Eyepiece</dt><dd>—</dd>
-              <dt>Image Processing</dt><dd>—</dd>
+              <dt>Telescope</dt><dd>${telescopeField}</dd>
+              <dt>Mirror</dt><dd>${mirrorField}</dd>
+              <dt>Eyepiece</dt><dd>${eyepieceField}</dd>
+              <dt>Image Processing</dt><dd>${processingField}</dd>
             </dl>
           </div>
         </div>
@@ -717,6 +776,13 @@ function initModals() {
       postForm.reset();
       previewBox.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>`;
       document.getElementById(postForm.dataset.modalId)?.classList.remove("open");
+    });
+
+    Object.entries(POST_TEXT_FIELD_RULES).forEach(([id, rules]) => {
+      const input = document.getElementById(id);
+      if (!input) return;
+      input.addEventListener("input", () => validatePostTextInput(input, rules));
+      input.addEventListener("blur", () => validatePostTextInput(input, rules));
     });
   }
 
@@ -846,6 +912,9 @@ function initPostFormValidation() {
         errorEl.textContent = "";
       }
     });
+    if (!validateAllPostTextInputs()) {
+      valid = false;
+    }
     if (!valid) {
       e.preventDefault();
     }

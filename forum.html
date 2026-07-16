@@ -147,14 +147,29 @@
       <h2>Post your image</h2>
       <form id="post-image-form" data-modal-id="post-image-modal">
         <div class="field">
-          <label for="post-title-input">Title</label>
-          <input type="text" id="post-title-input" placeholder="e.g. Orion Nebula, single night" required aria-describedby="post-title-input-error">
-          <div class="field-error" id="post-title-input-error" aria-live="polite"></div>
+          <label for="post-object-input">Object</label>
+          <input type="text" id="post-object-input" placeholder="e.g. M42 — Orion Nebula" maxlength="50" required aria-describedby="post-object-input-error">
+          <div class="field-error" id="post-object-input-error" aria-live="polite"></div>
         </div>
         <div class="field">
-          <label for="post-object-input">Object</label>
-          <input type="text" id="post-object-input" placeholder="e.g. M42 — Orion Nebula" required aria-describedby="post-object-input-error">
-          <div class="field-error" id="post-object-input-error" aria-live="polite"></div>
+          <label for="post-telescope-input">Telescope</label>
+          <input type="text" id="post-telescope-input" placeholder="e.g. 8\" Newtonian" maxlength="50" aria-describedby="post-telescope-input-error">
+          <div class="field-error" id="post-telescope-input-error" aria-live="polite"></div>
+        </div>
+        <div class="field">
+          <label for="post-mirror-input">Mirror</label>
+          <input type="text" id="post-mirror-input" placeholder="e.g. f/4.9" maxlength="50" aria-describedby="post-mirror-input-error">
+          <div class="field-error" id="post-mirror-input-error" aria-live="polite"></div>
+        </div>
+        <div class="field">
+          <label for="post-eyepiece-input">Eyepiece</label>
+          <input type="text" id="post-eyepiece-input" placeholder="e.g. 10mm Plossl" maxlength="50" aria-describedby="post-eyepiece-input-error">
+          <div class="field-error" id="post-eyepiece-input-error" aria-live="polite"></div>
+        </div>
+        <div class="field">
+          <label for="post-processing-input">Image Processing</label>
+          <input type="text" id="post-processing-input" placeholder="e.g. Stacked, PixInsight" maxlength="50" aria-describedby="post-processing-input-error">
+          <div class="field-error" id="post-processing-input-error" aria-live="polite"></div>
         </div>
         <div class="field">
           <label for="image-upload-input">Image</label>
