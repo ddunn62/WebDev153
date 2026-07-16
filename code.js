@@ -21,13 +21,19 @@ async function supabaseQuery(endpoint, options = {}) {
   const headers = {
     "apikey": SUPABASE_KEY,
     "Authorization": `Bearer ${SUPABASE_KEY}`,
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    ...(options.headers || {})
   };
   
   try {
-    const response = await fetch(url, { headers, ...options });
+    const response = await fetch(url, { ...options, headers });
     if (!response.ok) throw new Error(`Supabase error: ${response.statusText}`);
-    return await response.json();
+    if (response.status === 204) return null;
+    const contentType = response.headers.get("content-type") || "";
+    if (contentType.includes("application/json")) {
+      return await response.json();
+    }
+    return null;
   } catch (error) {
     console.error("Supabase query error:", error);
     return null;
@@ -49,15 +55,19 @@ async function saveForumPost(title, object, imageURL, userId) {
     image_url: imageURL,
     user_id: userId,
     created_at: new Date().toISOString(),
-    likes: 0
+    likes: 0,
+    comments: []
   };
   
   const response = await supabaseQuery("/posts", {
     method: "POST",
+    headers: {
+      "Prefer": "return=representation"
+    },
     body: JSON.stringify(post)
   });
   
-  return response;
+  return Array.isArray(response) ? (response[0] || null) : response;
 }
 
 // Update likes for a post
@@ -65,6 +75,55 @@ async function updatePostLikes(postId, likes) {
   await supabaseQuery(`/posts?id=eq.${postId}`, {
     method: "PATCH",
     body: JSON.stringify({ likes })
+  });
+}
+
+async function updatePostComments(postId, comments) {
+  await supabaseQuery(`/posts?id=eq.${postId}`, {
+    method: "PATCH",
+    body: JSON.stringify({ comments })
+  });
+}
+
+function normalizeComments(rawComments) {
+  if (Array.isArray(rawComments)) return rawComments;
+  if (typeof rawComments === "string") {
+    try {
+      const parsed = JSON.parse(rawComments);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+  return [];
+}
+
+function renderCommentList(card, comments) {
+  let commentList = card.querySelector(".comment-list");
+  if (!commentList) {
+    commentList = document.createElement("div");
+    commentList.className = "comment-list";
+    const commentBox = card.querySelector(".comment-box");
+    card.insertBefore(commentList, commentBox || null);
+  }
+
+  commentList.innerHTML = "";
+  commentList.hidden = comments.length === 0;
+
+  comments.forEach((comment) => {
+    const item = document.createElement("div");
+    item.className = "comment-item";
+
+    const author = document.createElement("p");
+    author.className = "comment-author";
+    author.textContent = comment.author || "Anonymous";
+
+    const body = document.createElement("p");
+    body.className = "comment-copy";
+    body.textContent = comment.text || "";
+
+    item.append(author, body);
+    commentList.appendChild(item);
   });
 }
 
@@ -176,6 +235,7 @@ async function loadAndRenderForumPosts() {
     const card = document.createElement("article");
     card.className = "card post-card";
     card.setAttribute("data-post-id", post.id);
+    card._comments = normalizeComments(post.comments);
     
     const imgHTML = post.image_url
       ? `<img src="${post.image_url}" alt="${post.title}">`
@@ -205,12 +265,14 @@ async function loadAndRenderForumPosts() {
         <button class="action-btn comment-btn" type="button">💬 Comment</button>
         <button class="action-btn share-btn" type="button">↗ Share</button>
       </div>
+      <div class="comment-list"></div>
       <div class="comment-box">
         <input type="text" placeholder="Add a comment…">
         <button class="action-btn comment-submit" type="button">Post</button>
       </div>
     `;
-    
+
+    renderCommentList(card, card._comments);
     list.appendChild(card);
   });
 }
@@ -451,46 +513,74 @@ function initAboutSlideshow() {
    upvote / comment / share
    ----------------------------------------------------------- */
 function initForumActions() {
-  document.querySelectorAll(".upvote-btn").forEach((btn) => {
-    btn.addEventListener("click", async () => {
-      const countEl = btn.querySelector(".upvote-count");
-      const upvoted = btn.classList.toggle("upvoted");
+  const forumCardList = document.getElementById("forum-card-list");
+  if (!forumCardList || forumCardList.dataset.bound === "true") return;
+
+  forumCardList.dataset.bound = "true";
+
+  document.querySelectorAll(".post-card").forEach((card) => {
+    card._comments = normalizeComments(card._comments);
+    renderCommentList(card, card._comments);
+  });
+
+  forumCardList.addEventListener("click", async (event) => {
+    const upvoteBtn = event.target.closest(".upvote-btn");
+    if (upvoteBtn) {
+      const countEl = upvoteBtn.querySelector(".upvote-count");
+      const upvoted = upvoteBtn.classList.toggle("upvoted");
       let count = parseInt(countEl.textContent, 10) || 0;
       count += upvoted ? 1 : -1;
       countEl.textContent = count;
-      
-      // Save updated likes to Supabase if post has an ID
-      const postCard = btn.closest(".post-card");
+
+      const postCard = upvoteBtn.closest(".post-card");
       const postId = postCard?.getAttribute("data-post-id");
       if (postId) {
         await updatePostLikes(postId, count);
       }
-    });
-  });
+      return;
+    }
 
-  document.querySelectorAll(".comment-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const box = btn.closest(".post-card").querySelector(".comment-box");
+    const commentBtn = event.target.closest(".comment-btn");
+    if (commentBtn) {
+      const box = commentBtn.closest(".post-card")?.querySelector(".comment-box");
       if (box) box.classList.toggle("open");
-    });
-  });
+      return;
+    }
 
-  document.querySelectorAll(".share-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const original = btn.innerHTML;
-      btn.textContent = "Link copied";
-      setTimeout(() => (btn.innerHTML = original), 1400);
-    });
-  });
+    const shareBtn = event.target.closest(".share-btn");
+    if (shareBtn) {
+      const original = shareBtn.innerHTML;
+      shareBtn.textContent = "Link copied";
+      setTimeout(() => (shareBtn.innerHTML = original), 1400);
+      return;
+    }
 
-  document.querySelectorAll(".comment-submit").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const input = btn.previousElementSibling;
-      if (input && input.value.trim()) {
-        input.value = "";
-        input.placeholder = "Comment posted";
-      }
+    const submitBtn = event.target.closest(".comment-submit");
+    if (!submitBtn) return;
+
+    const postCard = submitBtn.closest(".post-card");
+    const input = postCard?.querySelector(".comment-box input");
+    const commentText = input?.value.trim();
+    if (!postCard || !input || !commentText) return;
+
+    const author = auth.currentUser?.email || auth.currentUser?.uid || "Anonymous";
+    const comments = normalizeComments(postCard._comments);
+    comments.push({
+      author,
+      text: commentText,
+      createdAt: new Date().toISOString()
     });
+
+    postCard._comments = comments;
+    renderCommentList(postCard, comments);
+
+    const postId = postCard.getAttribute("data-post-id");
+    if (postId) {
+      await updatePostComments(postId, comments);
+    }
+
+    input.value = "";
+    input.placeholder = "Add a comment…";
   });
 }
 
@@ -588,6 +678,7 @@ function initModals() {
 
       const card = document.createElement("article");
       card.className = "card post-card";
+      card._comments = [];
       if (newPost && newPost.id) {
         card.setAttribute("data-post-id", newPost.id);
       }
@@ -615,16 +706,17 @@ function initModals() {
           <button class="action-btn comment-btn" type="button">💬 Comment</button>
           <button class="action-btn share-btn" type="button">↗ Share</button>
         </div>
+        <div class="comment-list"></div>
         <div class="comment-box">
           <input type="text" placeholder="Add a comment…">
           <button class="action-btn comment-submit" type="button">Post</button>
         </div>
       `;
+      renderCommentList(card, []);
       list.prepend(card);
       postForm.reset();
       previewBox.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>`;
       document.getElementById(postForm.dataset.modalId)?.classList.remove("open");
-      initForumActions();
     });
   }
 

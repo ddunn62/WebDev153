@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>nightlens — Resource Aggregator</title>
+<meta name="description" content="Find nightlens astronomy resources for telescopes, eyepieces, cameras, and beginner guides to build your stargazing setup.">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -25,6 +26,7 @@
   </nav>
 
   <main class="app-main">
+    <h1 class="visually-hidden">nightlens Resources</h1>
     <div class="app-header">
       <a class="back-link" href="feed.html" aria-label="Back to Feed">← Back to Feed</a>
       <div class="app-header-actions">
@@ -71,7 +73,19 @@
         </thead>
         <tbody>
           <tr class="card" data-category="telescopes">
-            <td><h2>Choosing your first telescope</h2></td>
+            <td>
+              <details class="resource-dropdown">
+                <summary>
+                  <span class="resource-summary-copy">
+                    <h2>Choosing your first telescope</h2>
+                  </span>
+                  <span class="resource-summary-icon" aria-hidden="true">&#9662;</span>
+                </summary>
+                <div class="resource-embed">
+                  <iframe width="560" height="315" src="https://www.youtube.com/embed/Thh9MKQlpeE?si=UDrhH0xBMz1M43Ny" title="YouTube guide about choosing your first telescope" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+              </details>
+            </td>
             <td>Telescopes</td>
           </tr>
           <tr class="card" data-category="eyepieces">
@@ -95,6 +109,11 @@
     <a href="about.html">Contact / About</a> | 
     <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> | 
     <a href="https://firebase.google.com/docs/rules" target="_blank" rel="noopener">Account Security</a>
+    <p>
+      <a href="https://jigsaw.w3.org/css-validator/check/referer">
+        <img style="border:0;width:88px;height:31px" src="https://jigsaw.w3.org/css-validator/images/vcss-blue" alt="Valid CSS!">
+      </a>
+    </p>
   </footer>
 <script type="module" src="code.js"></script>
 </body>

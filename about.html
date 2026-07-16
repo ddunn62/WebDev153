@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>nightlens — About</title>
+<meta name="description" content="Learn about nightlens, a community-focused astronomy site for curated content, astrophotography sharing, and gear resources.">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -25,6 +26,7 @@
   </nav>
 
   <main class="app-main">
+    <h1 class="visually-hidden">nightlens About</h1>
     <div class="app-header">
       <a class="back-link" href="feed.html" aria-label="Back to Feed">← Back to Feed</a>
       <div class="app-header-actions">
@@ -96,7 +98,7 @@
         </p>
       </article>
 
-      <div class="about-slideshow-controls" aria-label="Slideshow controls">
+      <div class="about-slideshow-controls" role="group" aria-label="Slideshow controls">
         <button class="btn btn-secondary btn-small" id="about-prev" type="button">← Previous</button>
         <div class="about-dots" role="tablist" aria-label="Slide selector">
           <button class="about-dot active" data-about-dot="0" type="button" aria-label="Go to slide 1" aria-current="true"></button>
@@ -114,6 +116,11 @@
     <a href="about.html">Contact / About</a> |
     <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> |
     <a href="https://firebase.google.com/docs/rules" target="_blank" rel="noopener">Account Security</a>
+    <p>
+      <a href="https://jigsaw.w3.org/css-validator/check/referer">
+        <img style="border:0;width:88px;height:31px" src="https://jigsaw.w3.org/css-validator/images/vcss-blue" alt="Valid CSS!">
+      </a>
+    </p>
   </footer>
 
 <script type="module" src="code.js"></script>

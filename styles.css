@@ -41,6 +41,18 @@ html, body {
   line-height: 1.5;
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* Celestial starfield background */
 html {
   background-image: url('Images/geralt-night-9942127.jpg');
@@ -165,23 +177,13 @@ form {
   background: #fff;
 }
 
-.field input:focus,
-.field select:focus {
+.field input:focus {
   outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
 .field input[aria-invalid="true"] {
   border-color: #c0392b;
-}
-
-.field select {
-  font-family: inherit;
-  font-size: 18px;
-  padding: 10px 12px;
-  border: 1px solid var(--panel-border);
-  border-radius: 6px;
-  background: #fff;
 }
 
 .field-error {
@@ -284,15 +286,13 @@ body.signup-page .field label {
   color: rgba(255, 255, 255, 0.85);
 }
 
-body.signup-page .field input,
-body.signup-page .field select {
+body.signup-page .field input {
   background: rgba(255, 255, 255, 0.95);
   border: 1px solid rgba(255, 255, 255, 0.3);
   color: var(--text);
 }
 
-body.signup-page .field input:focus,
-body.signup-page .field select:focus {
+body.signup-page .field input:focus {
   outline: 2px solid rgba(255, 255, 255, 0.5);
 }
 
@@ -349,15 +349,13 @@ body.signin-page .field label {
   color: rgba(255, 255, 255, 0.85);
 }
 
-body.signin-page .field input,
-body.signin-page .field select {
+body.signin-page .field input {
   background: rgba(255, 255, 255, 0.95);
   border: 1px solid rgba(255, 255, 255, 0.3);
   color: var(--text);
 }
 
-body.signin-page .field input:focus,
-body.signin-page .field select:focus {
+body.signin-page .field input:focus {
   outline: 2px solid rgba(255, 255, 255, 0.5);
 }
 
@@ -387,6 +385,15 @@ body.signin-page .auth-switch a:hover {
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
+}
+.site-footer p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.site-footer img {
+  display: block;
 }
 .site-header {
   text-align: center;
@@ -742,6 +749,59 @@ body.signin-page .auth-switch a:hover {
   background: #e7e7ea;
 }
 
+.resource-dropdown {
+  width: 100%;
+}
+
+.resource-dropdown summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+}
+
+.resource-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+.resource-summary-copy {
+  display: flex;
+  flex-direction: column;
+}
+
+.resource-summary-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #1a2f5a;
+  font-size: 18px;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.resource-dropdown[open] .resource-summary-icon {
+  transform: rotate(180deg);
+}
+
+.resource-embed {
+  margin-top: 16px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(26, 47, 90, 0.08);
+  border: 1px solid rgba(26, 47, 90, 0.12);
+}
+
+.resource-embed iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border: 0;
+}
+
 .card {
   background: rgba(241, 241, 243, 0.75);
   backdrop-filter: blur(10px);
@@ -822,44 +882,6 @@ body.signin-page .auth-switch a:hover {
   width: 14px;
   height: 14px;
   opacity: 0.7;
-}
-
-.image-of-day-section {
-  margin-bottom: 32px;
-}
-
-.image-of-day-section h3 {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 12px;
-  color: var(--text);
-}
-
-.image-of-day {
-  width: 100%;
-  max-width: 360px;
-  aspect-ratio: 1;
-  background: #e0e0e0;
-  border-radius: 8px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.image-of-day img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.card-placeholder {
-  min-height: 110px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-muted);
-  font-size: 18px;
 }
 
 .card h2 { font-size: 20px; margin-bottom: 6px; }
@@ -1116,9 +1138,41 @@ body.signin-page .auth-switch a:hover {
 }
 .action-btn svg { width: 15px; height: 15px; }
 
+.comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.comment-item {
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(26, 47, 90, 0.12);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.comment-author,
+.comment-copy {
+  margin: 0;
+}
+
+.comment-author {
+  color: #1a2f5a;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.comment-copy {
+  color: var(--text-muted);
+  font-size: 17px;
+  line-height: 1.45;
+}
+
 .comment-box {
   display: none;
   gap: 8px;
+  flex-wrap: wrap;
 }
 .comment-box.open { display: flex; }
 .comment-box input {
