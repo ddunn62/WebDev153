@@ -11,6 +11,12 @@ const SUPABASE_KEY = "YOUR_SUPABASE_ANON_KEY"; // Get from Supabase project sett
 
 // Supabase helper functions
 async function supabaseQuery(endpoint, options = {}) {
+  // Skip if credentials not set
+  if (SUPABASE_URL === "YOUR_SUPABASE_URL" || SUPABASE_KEY === "YOUR_SUPABASE_ANON_KEY") {
+    console.warn("Supabase credentials not configured. Skipping database operations.");
+    return null;
+  }
+  
   const url = `${SUPABASE_URL}/rest/v1${endpoint}`;
   const headers = {
     "apikey": SUPABASE_KEY,
