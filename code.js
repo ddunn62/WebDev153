@@ -480,7 +480,7 @@ function initModals() {
   // Submitting "Post your image" creates a new card to the forum feed
   const postForm = document.getElementById("post-image-form");
   if (postForm) {
-    postForm.addEventListener("submit", (e) => {
+    postForm.addEventListener("submit", async (e) => {
       if (!postForm.checkValidity()) {
         postForm.querySelectorAll("input[required]").forEach((input) => {
           const errorEl = document.getElementById(`${input.id}-error`);
@@ -522,7 +522,7 @@ function initModals() {
       // Use image HTML for display
       const imgHTML = previewImg
         ? previewImg.outerHTML
-        : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21/></svg>`;
+        : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>`;
 
       const card = document.createElement("article");
       card.className = "card post-card";
