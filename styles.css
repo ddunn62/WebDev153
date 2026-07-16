@@ -43,7 +43,7 @@ html, body {
 
 /* Celestial starfield background */
 html {
-  background-image: url('images/geralt-night-9942127.jpg');
+  background-image: url('Images/geralt-night-9942127.jpg');
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
